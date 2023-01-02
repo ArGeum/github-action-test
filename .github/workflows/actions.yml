@@ -1,13 +1,29 @@
 name: Actions workflow
 
 on:
-  repository_dispatch:
+  push:
+    branches:
+      - master
+      - 'feature/*' #matches feature/feat feature/asdasd 
+                    #notMatches feat/feature
+      - 'feature/**' #matches feature/subdirectory/anything
+    #branches-ignore: Cannot use branches and branches ignore at the same time
+    #  - devl
+    tags:
+      - v1.*
+    #tags-ignore Cannot use at the same time with tags
+    paths:
+      - '**.js'
+      - '!filename.js' #all js except this specific file
+    #paths-ignore: Cannot use at the same time with paths
+      
+  #repository_dispatch:
   #schedule:
    # - cron: "0/5 * * * *"
    # - cron: "0/6 * * * *"
   # push:
-  pull_request:
-    types: [closed, assigned, opened, reopened]
+  #pull_request:
+  #  types: [closed, assigned, opened, reopened]
 
 jobs:
   run-github-actions:
